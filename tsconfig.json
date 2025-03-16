@@ -5,6 +5,15 @@
   "references": [
     {
       "path": "./apps/myapp"
+    },
+    {
+      "path": "./libs/hotel"
+    },
+    {
+      "path": "./libs/flight"
+    },
+    {
+      "path": "./libs/shared"
     }
   ]
 }
