@@ -7,6 +7,21 @@ import HomeScreen from '../screens/HomeScreen';
 import { HotelScreen, HotelBookingScreen } from '@myworkspace/hotel';
 import { FlightScreen, FlightBookingScreen } from '@myworkspace/flight';
 
+// Define a type for the screen props
+type ScreenProps = {
+  navigation: any;
+  route: any;
+};
+
+// Create wrapper components instead of using inline functions
+const HotelScreenWrapper = (props: ScreenProps) => (
+  <HotelScreen {...props} isEnabled={config.features.hotel} />
+);
+
+const FlightScreenWrapper = (props: ScreenProps) => (
+  <FlightScreen {...props} isEnabled={config.features.flight} />
+);
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -14,17 +29,17 @@ export default function App() {
     <AppProvider>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
             <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Travel App' }} />
             <Stack.Screen
               name="Hotel"
               options={{ title: 'Hotels' }}
-              component={props => <HotelScreen {...props} isEnabled={config.features.hotel} />}
+              component={HotelScreenWrapper}
             />
             <Stack.Screen
               name="Flight"
               options={{ title: 'Flights' }}
-              component={props => <FlightScreen {...props} isEnabled={config.features.flight} />}
+              component={FlightScreenWrapper}
             />
             <Stack.Screen
               name="HotelBooking"
