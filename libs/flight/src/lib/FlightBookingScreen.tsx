@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Platform, StyleSheet } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 
@@ -50,6 +50,7 @@ export function FlightBookingScreen({ route }) {
   // If camera permission is granted, display camera view
   return (
     <View style={styles.container}>
+        <Text style={{fontSize: 17}}>Scan Your Boarding Pass for flight #{flightId}</Text>
       <CameraView style={styles.camera} facing={facing}>
         <View style={styles.buttonContainer}>
         </View>
