@@ -6,7 +6,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 
-
 const HomeScreen = lazy(() => import('../screens/HomeScreen'));
 
 const HotelScreen = lazy(() =>
@@ -22,9 +21,8 @@ const FlightScreen = lazy(() =>
 );
 
 const FlightBookingScreen = lazy(() =>
-  import(`@myworkspace/flight/FlightBookingScreen.${Platform.OS === 'web' ? 'web' : 'mobile'}`)
-)
-
+  import('@myworkspace/flight').then(module => ({ default: module.FlightBookingScreen }))
+);
 
 type ScreenProps = {
   navigation: any;
