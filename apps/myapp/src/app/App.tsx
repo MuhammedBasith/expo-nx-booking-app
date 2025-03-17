@@ -22,7 +22,7 @@ const FlightScreen = lazy(() =>
 );
 
 const FlightBookingScreen = lazy(() =>
-  import(`@myworkspace/flight/FlightBookingScreen.${Platform.OS}`)
+  import(`@myworkspace/flight/FlightBookingScreen.${Platform.OS === 'web' ? 'web' : 'mobile'}`)
 )
 
 
