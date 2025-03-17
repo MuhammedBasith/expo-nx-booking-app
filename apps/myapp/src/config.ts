@@ -1,6 +1,7 @@
 export const config = {
-    features: {
-      hotel: true,
-      flight: true,
-    },
-  };
+  features: {
+    hotel: true,
+    flight: true,
+  },
+};
+
