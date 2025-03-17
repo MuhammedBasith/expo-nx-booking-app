@@ -20,7 +20,7 @@ const DESTINATION_IMAGES = {
   'Maldives': 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8',
 };
 
-// Define types for the DestinationCard props
+
 type DestinationCardProps = {
   destination: string;
   imageUrl: string;
@@ -28,35 +28,35 @@ type DestinationCardProps = {
   onPress: () => void;
 };
 
-// Define navigation type
+
 type NavigationProp = {
   navigate: (screen: string, params?: any) => void;
 };
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
-  
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      
+
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerTitle}>Travel Explorer</Text>
           <Text style={styles.headerSubtitle}>Discover your perfect getaway</Text>
-          
+
           <View style={styles.searchBar}>
             <Text style={styles.searchText}>Where would you like to go?</Text>
           </View>
         </View>
-        
+
         <View style={styles.wavyBackground}>
           <View style={styles.wave} />
           <View style={[styles.wave, styles.wave2]} />
         </View>
       </View>
-      
-      <ScrollView 
+
+      <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={true}
@@ -67,32 +67,32 @@ export default function HomeScreen() {
               <HotelCard onPress={() => navigation.navigate('Hotel')} />
             </View>
           )}
-          
+
           {config.features.flight && (
             <View style={[styles.cardWrapper, isWeb && styles.webCardWrapper]}>
               <FlightCard onPress={() => navigation.navigate('Flight')} />
             </View>
           )}
         </View>
-        
+
         <View style={styles.featuredSection}>
           <Text style={styles.sectionTitle}>Featured Destinations</Text>
           <View style={styles.featuredGrid}>
             {Object.entries(DESTINATION_IMAGES).map(([destination, imageUrl], index) => (
-              <DestinationCard 
-                key={destination} 
-                destination={destination} 
-                imageUrl={imageUrl} 
+              <DestinationCard
+                key={destination}
+                destination={destination}
+                imageUrl={imageUrl}
                 index={index}
                 onPress={() => {
-                  // Navigate to destination details in a real app
+                  // dummy nav for now.
                   console.log(`Navigate to ${destination}`);
                 }}
               />
             ))}
           </View>
         </View>
-        
+
         <View style={styles.travelTipsSection}>
           <Text style={styles.sectionTitle}>Travel Tips</Text>
           <Surface style={styles.tipCard}>
@@ -101,7 +101,7 @@ export default function HomeScreen() {
               Roll clothes instead of folding them to save space and prevent wrinkles.
             </Text>
           </Surface>
-          
+
           <Surface style={styles.tipCard}>
             <Text style={styles.tipTitle}>Stay Hydrated</Text>
             <Text style={styles.tipText}>
@@ -121,8 +121,8 @@ function DestinationCard({ destination, imageUrl, onPress }: DestinationCardProp
       isWeb && styles.webDestinationCardContainer
     ]}>
       <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
-        <ImageBackground 
-          source={{ uri: imageUrl }} 
+        <ImageBackground
+          source={{ uri: imageUrl }}
           style={styles.destinationImage}
           imageStyle={styles.destinationImageStyle}
         >

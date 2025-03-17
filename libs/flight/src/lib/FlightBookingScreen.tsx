@@ -14,7 +14,7 @@ export function FlightBookingScreen({ route, navigation }) {
   const [passengerCount, setPassengerCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const theme = useTheme();
-  
+
   // Find the flight details from mock data
   const flight = flights.find(f => f.id === flightId) || {
     id: flightId,
@@ -29,7 +29,7 @@ export function FlightBookingScreen({ route, navigation }) {
     cabinClass: ['Economy'],
   };
 
-  // Handle permission status and camera availability
+
   useEffect(() => {
     if (permission?.granted === false) {
       console.error('Camera permission denied.');
@@ -45,12 +45,12 @@ export function FlightBookingScreen({ route, navigation }) {
   // Calculate total price
   const calculateTotal = () => {
     let basePrice = flight.price;
-    
+
     // Apply class multiplier
     if (selectedClass === 'Business') basePrice *= 2.5;
     else if (selectedClass === 'First') basePrice *= 4;
     else if (selectedClass === 'Premium Economy') basePrice *= 1.5;
-    
+
     return basePrice * passengerCount;
   };
 
@@ -65,19 +65,19 @@ export function FlightBookingScreen({ route, navigation }) {
                 <Text style={styles.airline}>{flight.airline}</Text>
                 <Text style={styles.flightNumber}>{flight.flightNumber}</Text>
               </View>
-              
+
               <View style={styles.flightRoute}>
                 <View style={styles.cityInfo}>
                   <Text style={styles.cityCode}>{flight.departureCity.substring(0, 3).toUpperCase()}</Text>
                   <Text style={styles.time}>{flight.departureTime}</Text>
                 </View>
-                
+
                 <View style={styles.routeLine}>
                   <View style={styles.line} />
                   <MaterialIcons name="flight" size={20} color="#4a6fa5" style={styles.planeIcon} />
                   <Text style={styles.duration}>{flight.duration}</Text>
                 </View>
-                
+
                 <View style={styles.cityInfo}>
                   <Text style={styles.cityCode}>{flight.arrivalCity.substring(0, 3).toUpperCase()}</Text>
                   <Text style={styles.time}>{flight.arrivalTime}</Text>
@@ -86,11 +86,11 @@ export function FlightBookingScreen({ route, navigation }) {
             </View>
           </Card.Content>
         </Card>
-        
+
         <Card style={styles.bookingCard}>
           <Card.Content>
             <Title style={styles.cardTitle}>Booking Details</Title>
-            
+
             <View style={styles.formGroup}>
               <Text style={styles.label}>Travel Date</Text>
               <Surface style={styles.dateSelector}>
@@ -98,7 +98,7 @@ export function FlightBookingScreen({ route, navigation }) {
                 <MaterialIcons name="calendar-today" size={20} color="#4a6fa5" />
               </Surface>
             </View>
-            
+
             <View style={styles.formGroup}>
               <Text style={styles.label}>Cabin Class</Text>
               <View style={styles.classOptions}>
@@ -111,7 +111,7 @@ export function FlightBookingScreen({ route, navigation }) {
                     ]}
                     onPress={() => setSelectedClass(cabinClass)}
                   >
-                    <Text 
+                    <Text
                       style={[
                         styles.classText,
                         selectedClass === cabinClass && styles.selectedClassText
@@ -123,18 +123,18 @@ export function FlightBookingScreen({ route, navigation }) {
                 ))}
               </View>
             </View>
-            
+
             <View style={styles.formGroup}>
               <Text style={styles.label}>Passengers</Text>
               <View style={styles.passengerSelector}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.passengerButton}
                   onPress={() => setPassengerCount(Math.max(1, passengerCount - 1))}
                 >
                   <MaterialIcons name="remove" size={20} color="#4a6fa5" />
                 </TouchableOpacity>
                 <Text style={styles.passengerCount}>{passengerCount}</Text>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.passengerButton}
                   onPress={() => setPassengerCount(passengerCount + 1)}
                 >
@@ -142,7 +142,7 @@ export function FlightBookingScreen({ route, navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-            
+
             <View style={styles.formGroup}>
               <Text style={styles.label}>Boarding Pass ID</Text>
               <TextInput
@@ -156,30 +156,30 @@ export function FlightBookingScreen({ route, navigation }) {
             </View>
           </Card.Content>
         </Card>
-        
+
         <Card style={styles.pricingCard}>
           <Card.Content>
             <Title style={styles.cardTitle}>Price Summary</Title>
-            
+
             <View style={styles.priceRow}>
               <Text style={styles.priceLabel}>Base Price</Text>
               <Text style={styles.priceValue}>${flight.price} x {passengerCount}</Text>
             </View>
-            
+
             <View style={styles.priceRow}>
               <Text style={styles.priceLabel}>Cabin Class</Text>
               <Text style={styles.priceValue}>{selectedClass}</Text>
             </View>
-            
+
             <Divider style={styles.divider} />
-            
+
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total</Text>
               <Text style={styles.totalValue}>${calculateTotal()}</Text>
             </View>
           </Card.Content>
         </Card>
-        
+
         <View style={styles.buttonContainer}>
           <Button
             mode="contained"
@@ -206,7 +206,7 @@ export function FlightBookingScreen({ route, navigation }) {
     return (
       <View style={styles.container}>
         <Text style={styles.message}>No access to camera</Text>
-        <Button 
+        <Button
           mode="contained"
           style={styles.permissionButton}
           onPress={requestPermission}
@@ -224,12 +224,12 @@ export function FlightBookingScreen({ route, navigation }) {
         <Text style={styles.cameraTitle}>Scan Your Boarding Pass</Text>
         <Text style={styles.cameraSubtitle}>for flight #{flight.flightNumber}</Text>
       </View>
-      
+
       <CameraView style={styles.camera} facing={facing}>
         <View style={styles.cameraOverlay}>
           <View style={styles.scanFrame} />
           <Text style={styles.scanText}>Position the QR code within the frame</Text>
-          
+
           <Button
             mode="contained"
             style={styles.manualButton}

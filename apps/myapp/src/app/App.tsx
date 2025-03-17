@@ -1,25 +1,47 @@
+import { config } from '../config';
+import {Platform} from 'react-native';
+import React, { Suspense, lazy } from 'react';
+import { AppProvider } from '@myworkspace/shared';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { AppProvider } from '@myworkspace/shared';
-import { config } from '../config';
-import HomeScreen from '../screens/HomeScreen';
-import { HotelScreen, HotelBookingScreen } from '@myworkspace/hotel';
-import { FlightScreen, FlightBookingScreen } from '@myworkspace/flight';
 
-// Define a type for the screen props
+
+const HomeScreen = lazy(() => import('../screens/HomeScreen'));
+
+const HotelScreen = lazy(() =>
+  import('@myworkspace/hotel').then(module => ({ default: module.HotelScreen }))
+);
+
+const HotelBookingScreen = lazy(() =>
+  import('@myworkspace/hotel').then(module => ({ default: module.HotelBookingScreen }))
+);
+
+const FlightScreen = lazy(() =>
+  import('@myworkspace/flight').then(module => ({ default: module.FlightScreen }))
+);
+
+const FlightBookingScreen = lazy(() =>
+  import(`@myworkspace/flight/FlightBookingScreen.${Platform.OS === 'web' ? 'web' : 'mobile'}`)
+)
+
+
 type ScreenProps = {
   navigation: any;
   route: any;
 };
 
-// Create wrapper components instead of using inline functions
+// wrapper components for lazy-loaded screens
 const HotelScreenWrapper = (props: ScreenProps) => (
-  <HotelScreen {...props} isEnabled={config.features.hotel} />
+  <Suspense fallback={null}>
+    <HotelScreen {...props} isEnabled={config.features.hotel} />
+  </Suspense>
 );
 
 const FlightScreenWrapper = (props: ScreenProps) => (
-  <FlightScreen {...props} isEnabled={config.features.flight} />
+  <Suspense fallback={null}>
+    <FlightScreen {...props} isEnabled={config.features.flight} />
+  </Suspense>
 );
 
 const Stack = createStackNavigator();
@@ -29,29 +51,23 @@ export default function App() {
     <AppProvider>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
-            <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Travel App' }} />
-            <Stack.Screen
-              name="Hotel"
-              options={{ title: 'Hotels' }}
-              component={HotelScreenWrapper}
-            />
-            <Stack.Screen
-              name="Flight"
-              options={{ title: 'Flights' }}
-              component={FlightScreenWrapper}
-            />
-            <Stack.Screen
-              name="HotelBooking"
-              component={HotelBookingScreen}
-              options={{ title: 'Book Hotel' }}
-            />
-            <Stack.Screen
-              name="FlightBooking"
-              component={FlightBookingScreen}
-              options={{ title: 'Book Flight' }}
-            />
-          </Stack.Navigator>
+          <Suspense fallback={null}>
+            <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
+              <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Travel App' }} />
+              <Stack.Screen name="Hotel" component={HotelScreenWrapper} options={{ title: 'Hotels' }} />
+              <Stack.Screen name="Flight" component={FlightScreenWrapper} options={{ title: 'Flights' }} />
+              <Stack.Screen
+                name="HotelBooking"
+                component={HotelBookingScreen}
+                options={{ title: 'Book Hotel' }}
+              />
+              <Stack.Screen
+                name="FlightBooking"
+                component={FlightBookingScreen}
+                options={{ title: 'Book Flight' }}
+              />
+            </Stack.Navigator>
+          </Suspense>
         </NavigationContainer>
       </PaperProvider>
     </AppProvider>

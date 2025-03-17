@@ -11,7 +11,7 @@ const isWeb = Platform.OS === 'web';
 
 export function HotelScreen({ isEnabled = true }) {
   const navigation = useNavigation();
-  
+
   if (!isEnabled) {
     return (
       <View style={styles.disabledContainer}>
@@ -20,16 +20,17 @@ export function HotelScreen({ isEnabled = true }) {
       </View>
     );
   }
-  
+
+  // using first five
   const availableHotels = hotels.slice(0, 5);
-  
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View style={styles.header}>
         <Title style={styles.headerTitle}>Hotels to Stay</Title>
         <Paragraph style={styles.headerSubtitle}>Find your perfect stay</Paragraph>
       </View>
-      
+
       {availableHotels.map(hotel => (
         <Card key={hotel.id} style={styles.card}>
           <ImageBackground
@@ -50,22 +51,22 @@ export function HotelScreen({ isEnabled = true }) {
               </View>
             </LinearGradient>
           </ImageBackground>
-          
+
           <Card.Content style={styles.cardContent}>
             <Title style={styles.hotelName}>{hotel.name}</Title>
             <View style={styles.locationContainer}>
               <MaterialIcons name="location-on" size={16} color="#7f8c8d" />
               <Text style={styles.locationText}>{hotel.location}</Text>
             </View>
-            
+
             <Text style={styles.description} numberOfLines={2}>
               {hotel.description}
             </Text>
-            
+
             <View style={styles.amenitiesContainer}>
               {hotel.amenities.slice(0, 3).map((amenity, index) => (
-                <Chip 
-                  key={index} 
+                <Chip
+                  key={index}
                   style={styles.amenityChip}
                   textStyle={styles.amenityText}
                 >
@@ -73,7 +74,7 @@ export function HotelScreen({ isEnabled = true }) {
                 </Chip>
               ))}
               {hotel.amenities.length > 3 && (
-                <Chip 
+                <Chip
                   style={styles.moreChip}
                   textStyle={styles.moreChipText}
                 >
@@ -82,17 +83,17 @@ export function HotelScreen({ isEnabled = true }) {
               )}
             </View>
           </Card.Content>
-          
+
           <Card.Actions style={styles.cardActions}>
-            <Button 
-              mode="contained" 
+            <Button
+              mode="contained"
               style={styles.bookButton}
               labelStyle={styles.buttonLabel}
               onPress={() => navigation.navigate('HotelBooking', { hotelId: hotel.id })}
             >
               Book Now
             </Button>
-            <Button 
+            <Button
               mode="outlined"
               style={styles.detailsButton}
               labelStyle={styles.detailsButtonLabel}
