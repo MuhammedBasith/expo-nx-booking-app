@@ -26,7 +26,7 @@ export function HotelCard({ onPress }: any) {
           end={{ x: 1, y: 1 }}
           style={styles.gradientHeader}
         >
-          <Title style={styles.cardTitle}>Luxury Hotels</Title>
+          <Title style={styles.cardTitle}>Hotels to Stay</Title>
           <Text style={styles.cardSubtitle}>Find your perfect stay</Text>
         </LinearGradient>
         

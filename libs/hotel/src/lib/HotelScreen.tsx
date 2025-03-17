@@ -21,13 +21,12 @@ export function HotelScreen({ isEnabled = true }) {
     );
   }
   
-  // Use the first 5 hotels from our mock data
   const availableHotels = hotels.slice(0, 5);
   
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View style={styles.header}>
-        <Title style={styles.headerTitle}>Luxury Hotels</Title>
+        <Title style={styles.headerTitle}>Hotels to Stay</Title>
         <Paragraph style={styles.headerSubtitle}>Find your perfect stay</Paragraph>
       </View>
       
